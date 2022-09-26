@@ -1,0 +1,13 @@
+name: NearChat
+version: '${project.version}'
+main: me.labstorm.nearchat.Main
+api-version: 1.16
+commands:
+  global:
+    usage: "/global <message>"
+    description: "Sends a message to all players regardless their distance."
+    permission: "nearchat.global"
+  nearchatreload:
+    usage: "/nearchatreload"
+    description: "Updates changes made to the config."
+    permission: "nearchat.reload"
