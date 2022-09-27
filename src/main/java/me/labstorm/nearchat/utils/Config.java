@@ -41,10 +41,28 @@ public class Config {
 
     private void generateConfig() {
         config.options()
-              .header("EXPLANATION TEXT (res: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html)");
+              .header("format --> style of the chat message\n" +
+                              "       --> use <name> for name of sender and <message> for the message\n" +
+                              "       --> important surround with ' even if it isn't is like that by default\n" +
+                              "distance --> distance in blocks a Player can write to others\n" +
+                              "distance_with_item --> distance in blocks a Player can write to others when holding the item that extends their speaking range\n" +
+                              "item.name --> name of the item that extends their speaking range\n" +
+                              "item.description --> the description of the item that extends their speaking range\n" +
+                              "ingredients --> ingredients for crafting recipe of the item that extends the speaking range\n" +
+                              "            --> just change the part after \"type:\" according to this list https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html\n" +
+                              "texturepack.enable --> enables or disables the custom resource pack\n" +
+                              "texturepack.url --> the url where the resource pack is going to be downloaded from\n" +
+                              "                --> [brief explanation of how to create custom texturepack]\n" +
+                              "                --> needs to be an instant download link (the download starts automatically when you open the link without any other steps)\n" +
+                              "                --> important surround with ' even if it isn't is like that by default\n" +
+                              "texturepack.filename --> name of the file after download\n");
+
         config.set("format", "<<name>> <message>");
         config.set("distance", 10);
         config.set("distance_with_item", 30);
+
+        config.set("item.name", "Megaphone");
+        config.set("item.description", "Enables you to talk to players within 30 blocks.");
 
         config.set("ingredients.top_left", new ItemStack(Material.AIR));
         config.set("ingredients.top_center", new ItemStack(Material.IRON_INGOT));
@@ -57,10 +75,9 @@ public class Config {
         config.set("ingredients.bottom_right", new ItemStack(Material.AIR));
 
         config.set("texturepack.enable", true);
-        config.set("texturepack.url", "https://drive.google.com/uc?export=download&id=1RGg5ncfMjHaaWD3RC7v0zdhSzBv21obx");
-
-        config.set("item.name", "Megaphone");
-        config.set("item.description", "Enables you to talk to players within 30 blocks.");
+        config.set("texturepack.url",
+                   "https://drive.google.com/uc?export=download&id=1mUa_4H2dq3c7ehVfwqZ7neAkD5k6kyJl");
+        config.set("texturepack.filename", "MegaphoneTexturePack.zip");
     }
 
     public YamlConfiguration getConfig() {

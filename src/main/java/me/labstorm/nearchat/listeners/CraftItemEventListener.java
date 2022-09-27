@@ -14,7 +14,8 @@ public class CraftItemEventListener implements Listener {
                 if (itemStack.getItemMeta().getPersistentDataContainer().getKeys().contains(Utils.MEGAPHONE)) {
                     e.setCancelled(true);
                 }
-            } catch (NullPointerException ignore) { }
+            } catch (NullPointerException ignore) {
+            }
         }
     }
 

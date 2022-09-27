@@ -15,36 +15,38 @@ public class AsyncPlayerChatEventListener implements Listener {
     public void onAsyncPlayerChatEvent(AsyncPlayerChatEvent e) {
         Player sender = e.getPlayer();
         YamlConfiguration config = Main.getConfiguration();
+        int distance = -1;
+        try {
+            if (sender.getInventory()
+                      .getItemInMainHand()
+                      .getItemMeta()
+                      .getPersistentDataContainer()
+                      .getKeys()
+                      .contains(Utils.MEGAPHONE)) {
+                distance = config.getInt("distance_with_item");
+            }
+        } catch (NullPointerException ignore) {
+        }
+        try {
+            if (sender.getInventory()
+                      .getItemInOffHand()
+                      .getItemMeta()
+                      .getPersistentDataContainer()
+                      .getKeys()
+                      .contains(Utils.MEGAPHONE)) {
+                distance = config.getInt("distance_with_item");
+            }
+        } catch (NullPointerException ignore) {
+        }
+        if (distance == -1) {
+            distance = config.getInt("distance");
+        }
+        String msg = String.format(Utils.getFormat(), sender.getDisplayName(), e.getMessage());
+        Bukkit.getConsoleSender().sendMessage(msg);
         for (Player receiver : Bukkit.getOnlinePlayers()) {
-            int distance = -1;
-            try {
-                if (sender.getInventory()
-                          .getItemInMainHand()
-                          .getItemMeta()
-                          .getPersistentDataContainer()
-                          .getKeys()
-                          .contains(Utils.MEGAPHONE)) {
-                    distance = config.getInt("distance_with_item");
-                }
-            } catch (NullPointerException ignore) {
-            }
-            try {
-                if (sender.getInventory()
-                          .getItemInOffHand()
-                          .getItemMeta()
-                          .getPersistentDataContainer()
-                          .getKeys()
-                          .contains(Utils.MEGAPHONE)) {
-                    distance = config.getInt("distance_with_item");
-                }
-            } catch (NullPointerException ignore) {
-            }
-            if (distance == -1) {
-                distance = config.getInt("distance");
-            }
-            Bukkit.broadcastMessage(distance + "");
-            if (receiver.getLocation().distance(sender.getLocation()) <= distance) {
-                receiver.sendMessage(String.format(Utils.getFormat(), sender.getDisplayName(), e.getMessage()));
+            if (receiver.getWorld().equals(sender.getWorld()) && receiver.getLocation()
+                                                                         .distance(sender.getLocation()) <= distance) {
+                receiver.sendMessage(msg);
             }
         }
         e.setCancelled(true);
