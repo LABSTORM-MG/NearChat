@@ -16,24 +16,23 @@ public class Config {
 
     public Config() {
         File dir = new File("./plugins/NearChat/");
-
+        boolean dirWasCreated = false;
         if (!dir.exists()) {
-            dir.mkdirs();
+            dirWasCreated = dir.mkdirs();
         }
 
         this.file = new File(dir, "config.yml");
-        boolean newConfigWasCreated = false;
+        boolean fileWasCreated = false;
         if (!file.exists()) {
             try {
-                file.createNewFile();
-                newConfigWasCreated = true;
+                fileWasCreated = file.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
         this.config = loadConfiguration(file);
-        if (newConfigWasCreated) {
+        if (dirWasCreated || fileWasCreated) {
             generateConfig();
         }
         save();
@@ -52,9 +51,9 @@ public class Config {
                               "            --> just change the part after \"type:\" according to this list https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html\n" +
                               "texturepack.enable --> enables or disables the custom resource pack\n" +
                               "texturepack.url --> the url where the resource pack is going to be downloaded from\n" +
-                              "                --> [brief explanation of how to create custom texturepack]\n" +
                               "                --> needs to be an instant download link (the download starts automatically when you open the link without any other steps)\n" +
                               "                --> important surround with ' even if it isn't is like that by default\n" +
+                              "                --> note: if you want to use your own texture just take the original resource pack and replace the image in \\assets\\minecraft\\textures\\item\\megaphone.png \n" +
                               "texturepack.filename --> name of the file after download\n");
 
         config.set("format", "<<name>> <message>");

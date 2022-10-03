@@ -6,12 +6,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Objects;
+
 public class CraftItemEventListener implements Listener {
     @EventHandler
-    public void oncraftItemEvent(CraftItemEvent e) {
+    public void onCraftItemEvent(CraftItemEvent e) {
         for (ItemStack itemStack : e.getInventory().getMatrix()) {
             try {
-                if (itemStack.getItemMeta().getPersistentDataContainer().getKeys().contains(Utils.MEGAPHONE)) {
+                if (Objects.requireNonNull(itemStack.getItemMeta())
+                           .getPersistentDataContainer().getKeys().contains(Utils.MEGAPHONE)) {
                     e.setCancelled(true);
                 }
             } catch (NullPointerException ignore) {

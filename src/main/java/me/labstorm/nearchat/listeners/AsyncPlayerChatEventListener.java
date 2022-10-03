@@ -9,6 +9,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import java.util.Objects;
+
 public class AsyncPlayerChatEventListener implements Listener {
 
     @EventHandler
@@ -17,23 +19,19 @@ public class AsyncPlayerChatEventListener implements Listener {
         YamlConfiguration config = Main.getConfiguration();
         int distance = -1;
         try {
-            if (sender.getInventory()
-                      .getItemInMainHand()
-                      .getItemMeta()
-                      .getPersistentDataContainer()
-                      .getKeys()
-                      .contains(Utils.MEGAPHONE)) {
+            if (Objects.requireNonNull(sender.getInventory().getItemInMainHand().getItemMeta())
+                       .getPersistentDataContainer()
+                       .getKeys()
+                       .contains(Utils.MEGAPHONE)) {
                 distance = config.getInt("distance_with_item");
             }
         } catch (NullPointerException ignore) {
         }
         try {
-            if (sender.getInventory()
-                      .getItemInOffHand()
-                      .getItemMeta()
-                      .getPersistentDataContainer()
-                      .getKeys()
-                      .contains(Utils.MEGAPHONE)) {
+            if (Objects.requireNonNull(sender.getInventory().getItemInOffHand().getItemMeta())
+                       .getPersistentDataContainer()
+                       .getKeys()
+                       .contains(Utils.MEGAPHONE)) {
                 distance = config.getInt("distance_with_item");
             }
         } catch (NullPointerException ignore) {

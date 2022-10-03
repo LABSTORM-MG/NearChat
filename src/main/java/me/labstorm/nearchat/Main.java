@@ -12,12 +12,10 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Objects;
+
 public final class Main extends JavaPlugin {
     public static Config configObj;
-    // TODO: https://bukkit.org/threads/distance-based-chat.498268/
-    // FIXME: config explanation of custom texture pack
-    // TODO: properly upload to Bukkit
-    // TODO: create private github repo readme
     private static Main instance;
 
     public static YamlConfiguration getConfiguration() {
@@ -43,8 +41,8 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new PlayerJoinListener(), this);
         pluginManager.registerEvents(new CraftItemEventListener(), this);
 
-        this.getCommand("global").setExecutor(new GlobalCommand());
-        this.getCommand("nearchatreload").setExecutor(new NearChatReloadCommand());
+        Objects.requireNonNull(this.getCommand("global")).setExecutor(new GlobalCommand());
+        Objects.requireNonNull(this.getCommand("nearchatreload")).setExecutor(new NearChatReloadCommand());
     }
 
 

@@ -12,12 +12,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Collections;
+import java.util.Objects;
 
 import static me.labstorm.nearchat.Main.getInstance;
 
@@ -51,21 +52,21 @@ public class Utils {
         YamlConfiguration config = Main.getConfiguration();
         ShapedRecipe megaphone = new ShapedRecipe(MEGAPHONE_RECIPE, nautilus_shell);
         megaphone.shape("123", "456", "789");
-        megaphone.setIngredient('1', config.getItemStack("ingredients.top_left").getType());
-        megaphone.setIngredient('2', config.getItemStack("ingredients.top_center").getType());
-        megaphone.setIngredient('3', config.getItemStack("ingredients.top_right").getType());
-        megaphone.setIngredient('4', config.getItemStack("ingredients.middle_left").getType());
-        megaphone.setIngredient('5', config.getItemStack("ingredients.middle_center").getType());
-        megaphone.setIngredient('6', config.getItemStack("ingredients.middle_right").getType());
-        megaphone.setIngredient('7', config.getItemStack("ingredients.bottom_left").getType());
-        megaphone.setIngredient('8', config.getItemStack("ingredients.bottom_center").getType());
-        megaphone.setIngredient('9', config.getItemStack("ingredients.bottom_right").getType());
+        megaphone.setIngredient('1', Objects.requireNonNull(config.getItemStack("ingredients.top_left")).getType());
+        megaphone.setIngredient('2', Objects.requireNonNull(config.getItemStack("ingredients.top_center")).getType());
+        megaphone.setIngredient('3', Objects.requireNonNull(config.getItemStack("ingredients.top_right")).getType());
+        megaphone.setIngredient('4', Objects.requireNonNull(config.getItemStack("ingredients.middle_left")).getType());
+        megaphone.setIngredient('5', Objects.requireNonNull(config.getItemStack("ingredients.middle_center")).getType());
+        megaphone.setIngredient('6', Objects.requireNonNull(config.getItemStack("ingredients.middle_right")).getType());
+        megaphone.setIngredient('7', Objects.requireNonNull(config.getItemStack("ingredients.bottom_left")).getType());
+        megaphone.setIngredient('8', Objects.requireNonNull(config.getItemStack("ingredients.bottom_center")).getType());
+        megaphone.setIngredient('9', Objects.requireNonNull(config.getItemStack("ingredients.bottom_right")).getType());
         Bukkit.getServer().addRecipe(megaphone);
     }
 
     public static byte[] createSha1(File file) throws NoSuchAlgorithmException, IOException {
         MessageDigest digest = MessageDigest.getInstance("SHA-1");
-        InputStream fis = new FileInputStream(file);
+        InputStream fis = Files.newInputStream(file.toPath());
         int n = 0;
         byte[] buffer = new byte[8192];
         while (n != -1) {
